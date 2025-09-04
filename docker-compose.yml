@@ -32,7 +32,7 @@ services:
     container_name: feed-t1
     ports: [ "4002:4002" ]
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://localhost:4001/ || exit 1" ]
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:4002/ || exit 1" ]
       interval: 5s
       timeout: 3s
       retries: 20
