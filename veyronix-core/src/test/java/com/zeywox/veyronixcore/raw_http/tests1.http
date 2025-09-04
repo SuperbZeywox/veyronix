@@ -1,0 +1,35 @@
+@base = http://localhost:8080
+@category = Computer
+#@id = REPLACE_WITH_REAL_ID
+@id = 32bcf5ee-f60e-400e-9d2d-412976be5ae9
+
+### Find product IDs by category
+GET {{base}}/products?category={{category}}
+
+### Get one product
+GET {{base}}/products/{{id}}
+
+### List by category, only in stock
+GET {{base}}/products?category={{category}}&inStock=true
+
+
+
+### Set stock
+PUT {{base}}/products/{{id}}/stock
+Content-Type: application/json
+
+{
+  "stock": 7
+}
+
+### Patch a product (name/price/category/description)
+PATCH {{base}}/products/{{id}}
+Content-Type: application/json
+
+{
+  "fields": {
+    "name": "Small Plastic Bike v2",
+    "category": "Kids",
+    "price": "699.99"
+  }
+}

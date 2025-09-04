@@ -1,0 +1,44 @@
+Run: 2025-09-04T09:18:25Z  Host: zeywox  Base: http://localhost:8080
+Plan per endpoint: warm-up(100) → [repeat x5: sequential(100) → burst(1000) → sleep 20s]
+
+Endpoint #1 warm-up (100): /products?category=Computer
+  cycle 1/5 → sequential(100) then burst(1000)
+  cycle 2/5 → sequential(100) then burst(1000)
+  cycle 3/5 → sequential(100) then burst(1000)
+  cycle 4/5 → sequential(100) then burst(1000)
+  cycle 5/5 → sequential(100) then burst(1000)
+Endpoint #2 warm-up (100): /products?category=Computer&inStock=true
+  cycle 1/5 → sequential(100) then burst(1000)
+  cycle 2/5 → sequential(100) then burst(1000)
+  cycle 3/5 → sequential(100) then burst(1000)
+  cycle 4/5 → sequential(100) then burst(1000)
+  cycle 5/5 → sequential(100) then burst(1000)
+Endpoint #3 warm-up (100): /products/015b3d42-b1c0-40e1-ba7c-98157c269fe5
+  cycle 1/5 → sequential(100) then burst(1000)
+  cycle 2/5 → sequential(100) then burst(1000)
+  cycle 3/5 → sequential(100) then burst(1000)
+  cycle 4/5 → sequential(100) then burst(1000)
+  cycle 5/5 → sequential(100) then burst(1000)
+
+Summary: Sequential — pooled results (all sequential samples combined per endpoint; 100 per run)
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+| # | Endpoint                                                   | total | min (ms) | median (ms) | avg (ms) | max (ms) | mode (ms) | p90 (ms) | p95 (ms) | p99 (ms) |
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+| 1 | /products?category=Computer                                |   500 |     0.29 |        0.52 |     0.61 |     3.31 |      0.42 |     1.00 |     1.12 |     1.41 |
+| 2 | /products?category=Computer&inStock=true                   |   500 |     0.28 |        0.53 |     0.60 |     1.84 |      0.40 |     0.92 |     1.09 |     1.37 |
+| 3 | /products/015b3d42-b1c0-40e1-ba7c-98157c269fe5             |   500 |     0.48 |        0.66 |     0.72 |     3.19 |      0.67 |     0.87 |     1.06 |     1.93 |
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+
+Burst (1000) — Run-averaged results (means of per-run metrics; n=5)
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+| # | Endpoint                                                   | total/run | min (ms) | median (ms) | avg (ms) | max (ms) | mode (ms) | p90 (ms) | p95 (ms) | p99 (ms) |
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+| 1 | /products?category=Computer                                |  1000 |     0.37 |        0.57 |     0.69 |    32.17 |      0.55 |     0.77 |     0.96 |     2.07 |
+| 2 | /products?category=Computer&inStock=true                   |  1000 |     0.39 |        0.57 |     0.74 |    36.50 |      0.54 |     0.81 |     0.99 |     2.32 |
+| 3 | /products/015b3d42-b1c0-40e1-ba7c-98157c269fe5             |  1000 |     0.53 |        0.89 |     1.14 |    45.55 |      0.87 |     1.13 |     1.60 |     4.25 |
++---+----------------------------------------------------------+-------+----------+-------------+----------+----------+-----------+----------+----------+----------+
+
+Per-endpoint variability (burst run-avg 'avg (ms)' ±SD over 5 runs):
+  - /products?category=Computer: ±0.04 ms
+  - /products?category=Computer&inStock=true: ±0.09 ms
+  - /products/015b3d42-b1c0-40e1-ba7c-98157c269fe5: ±0.19 ms

@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7.2.5-alpine   # pin version for repeatability
+    ports: ["6379:6379"]
+    command:
+      - redis-server
+      - --appendonly
+      - "no"
+      - --save
+      - ""                     # disable RDB saves (perf)
+      - --maxclients
+      - "20000"
+      - --tcp-backlog
+      - "65535"
+      - --protected-mode
+      - "no"                   # local only! never expose publicly
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    sysctls:
+      net.core.somaxconn: "65535"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  feed:
+    image: zeywox/feed-t1:1.0
+    container_name: feed-t1
+    ports: [ "4002:4002" ]
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:4001/ || exit 1" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20

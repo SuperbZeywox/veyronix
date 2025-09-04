@@ -1,0 +1,38 @@
+server:
+  undertow:
+    #    io-threads: ${UNDERTOW_IO_THREADS:${SPRING_CPU_CORES:8}}        # ≈ cores*2 (fallback 8)
+    #    worker-threads: ${UNDERTOW_WORKER_THREADS:${SPRING_CPU_CORES:64}} # start at ≈ cores*8 (Boot multiplies internally)
+    io-threads: 8        # ≈ cores*2 (fallback 8)
+    worker-threads: 64 # start at ≈ cores*8 (Boot multiplies internally)
+    direct-buffers: true
+    buffer-size: 16384
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  http2:
+    enabled: true
+  data:
+    redis:                    # KEEP: product DB (ver:* keys, product hashes)
+      host: localhost
+      port: 6379
+      timeout: 100s
+      lettuce:
+        pool:
+          max-active: 512
+          max-idle: 256
+          min-idle: 16
+          max-wait: 100s
+
+response-cache:
+  hard-ttl-seconds: 30      # Caffeine TTL
+  l1-soft-ttl-millis: 3000   # refresh-after-write interval
+  cacheable-pages-max: 3
+
+feed:
+  url: http://localhost:4002/api/products
