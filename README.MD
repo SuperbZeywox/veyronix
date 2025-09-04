@@ -109,14 +109,15 @@ Designed to be simple, fast, and resilient to imperfect client input.
 
 ### Run Metadata
 
-| Field | Value |
-|---|---|
-| Run | `2025-09-04T09:18:25Z` |
-| Host | `zeywox` |
-| Base | `http://localhost:8080` |
+| Field | Value                   |
+|-------|-------------------------|
+| Run   | `2025-09-04T09:18:25Z`  |
+| Host  | `zeywox`                |
+| Type  | `TTFB`                  |
+| Base  | `http://localhost:8080` |
+
 
 ### Endpoints
-
 | # | Endpoint |
 |---:|---|
 | 1 | `/products?category=Computer` |
